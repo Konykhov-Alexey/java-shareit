@@ -29,16 +29,22 @@ public class ItemRepositoryImpl implements ItemRepository {
     @Override
     public List<Item> searchItems(String search) {
         return items.values().stream()
-                .filter(Item::getAvailable)
-                .filter(item -> item.getName().toLowerCase().contains(search)
-                        || item.getDescription().toLowerCase().contains(search))
+                .filter(item -> Optional.ofNullable(item.getAvailable()).orElse(false))
+                .filter(item -> Optional.ofNullable(item.getName())
+                        .map(name -> name.toLowerCase().contains(search))
+                        .orElse(false)
+                        || Optional.ofNullable(item.getDescription())
+                        .map(desc -> desc.toLowerCase().contains(search))
+                        .orElse(false))
                 .toList();
     }
 
     @Override
     public List<Item> getUserItems(long userId) {
         return items.values().stream()
-                .filter(item -> item.getOwner().getId() == userId)
+                .filter(item -> Optional.ofNullable(item.getOwner())
+                        .map(owner -> owner.getId() ==  userId)
+                        .orElse(false))
                 .toList();
     }
 
