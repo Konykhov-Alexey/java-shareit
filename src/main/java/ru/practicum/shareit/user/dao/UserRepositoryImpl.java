@@ -1,9 +1,11 @@
 package ru.practicum.shareit.user.dao;
 
 import org.springframework.stereotype.Component;
+import ru.practicum.shareit.exception.EmailException;
 import ru.practicum.shareit.user.model.User;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,9 +29,15 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> getUserByEmail(String email) {
-        return users.values().stream()
-                .filter(user -> user.getEmail().equals(email))
-                .findFirst();
+        List<User> found = users.values().stream()
+                .filter(user -> Optional.ofNullable(user.getEmail())
+                        .map(e -> e.equals(email))
+                        .orElse(false))
+                .toList();
+        if (found.size() > 1) {
+            throw new EmailException("Обнаружено несколько пользователей с таким email адресом: " + email);
+        }
+        return found.stream().findFirst();
     }
 
     @Override
