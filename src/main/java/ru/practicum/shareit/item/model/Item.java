@@ -2,9 +2,12 @@ package ru.practicum.shareit.item.model;
 
 import lombok.*;
 import jakarta.persistence.*;
+import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.request.ItemRequest;
 
 import ru.practicum.shareit.user.model.User;
+
+import java.util.List;
 
 @Entity
 @Builder
@@ -32,5 +35,10 @@ public class Item {
 
     @Column(name = "is_available", nullable = false)
     private Boolean available;
-    private ItemRequest request;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.REMOVE)
+    private List<Booking> bookings;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.REMOVE)
+    private List<Comment> comments;
 }
