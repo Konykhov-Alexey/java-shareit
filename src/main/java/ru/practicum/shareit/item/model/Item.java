@@ -9,13 +9,14 @@ import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Builder
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "items")
 @EqualsAndHashCode(of = "id")
-@AllArgsConstructor
-@NoArgsConstructor
 public class Item {
 
     @Id
@@ -34,7 +35,7 @@ public class Item {
     private User owner;
 
     @Column(name = "is_available", nullable = false)
-    private Boolean available;
+    private boolean available;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.REMOVE)
     private List<Booking> bookings;

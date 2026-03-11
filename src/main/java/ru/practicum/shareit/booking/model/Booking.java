@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.enums.Status;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,9 +36,9 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "booker_id", nullable = false)
-    private User bokker;
+    private User booker;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private BookingStatus status;
+    private Status status;
 }

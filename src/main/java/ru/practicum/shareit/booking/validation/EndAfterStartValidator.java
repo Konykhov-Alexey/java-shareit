@@ -4,7 +4,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import ru.practicum.shareit.booking.dto.BookingCreateDto;
 
-public class EndAfterStartValidation implements ConstraintValidator<EndAfterStart, BookingCreateDto> {
+public class EndAfterStartValidator implements ConstraintValidator<EndAfterStart, BookingCreateDto> {
 
     @Override
     public boolean isValid(BookingCreateDto dto, ConstraintValidatorContext context) {

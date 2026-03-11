@@ -154,13 +154,13 @@ public class BookingServiceImpl implements BookingService {
 
     private void throwIfUserNotItemOwner(long userId, Item item) {
         if (item.getOwner().getId() != userId) {
-            throw new AccessDeniedException("User " + userId + " is not the owner of item " + item.getId());
+            throw new DeniedException("User " + userId + " is not the owner of item " + item.getId());
         }
     }
 
     private void throwIfUserNotItemOwnerOrBooker(long userId, Booking booking) {
         if (booking.getBooker().getId() != userId && booking.getItem().getOwner().getId() != userId) {
-            throw new AccessDeniedException("User " + userId + " is not the owner or Booker of item " + booking.getId());
+            throw new DeniedException("User " + userId + " is not the owner or Booker of item " + booking.getId());
         }
     }
 
