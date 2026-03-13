@@ -17,5 +17,4 @@ public interface BookingService {
     List<BookingDto> getOwnerBookings(long userId, BookingState state);
 
     BookingDto approveBooking(long userId, long bookingId, boolean approved);
-
 }
