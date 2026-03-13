@@ -7,7 +7,6 @@ import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.enums.Status;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Entity
