@@ -136,7 +136,7 @@ public class ItemServiceImpl implements ItemService {
             LocalDateTime now = LocalDateTime.now();
 
             List<Booking> itemBookings = bookings.stream()
-                    .filter(booking -> booking.getItem().getId() == item.getId())
+                    .filter(booking -> booking.getItem().getId().equals(item.getOwner().getId()))
                     .toList();
 
             Booking lastBooking = itemBookings.stream()
