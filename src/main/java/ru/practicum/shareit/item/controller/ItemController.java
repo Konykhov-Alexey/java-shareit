@@ -25,7 +25,6 @@ public class ItemController {
         return itemService.createItem(userId, itemCreateDto);
     }
 
-
     @GetMapping("/{itemId}")
     public ItemWithAdditionalInfoDto getItem(@RequestHeader(USER_ID_HEADER) long userId,
                                              @PathVariable long itemId) {

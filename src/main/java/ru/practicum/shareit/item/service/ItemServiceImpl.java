@@ -28,6 +28,7 @@ import static java.util.Collections.emptyList;
 
 @Slf4j
 @Service
+@Transactional
 @AllArgsConstructor
 public class ItemServiceImpl implements ItemService {
 

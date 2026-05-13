@@ -3,7 +3,6 @@ package ru.practicum.shareit.item.model;
 import lombok.*;
 import jakarta.persistence.*;
 import ru.practicum.shareit.booking.model.Booking;
-
 import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
@@ -29,12 +28,12 @@ public class Item {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "is_available", nullable = false)
+    private boolean available;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
-
-    @Column(name = "is_available", nullable = false)
-    private boolean available;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.REMOVE)
     private List<Booking> bookings;

@@ -1,20 +1,19 @@
 package ru.practicum.shareit.user.model;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.item.model.Item;
 
 import java.util.List;
 
-
+@Getter
+@Setter
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
-@Data
 @EqualsAndHashCode(of = "id")
 public class User {
 

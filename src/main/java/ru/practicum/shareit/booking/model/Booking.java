@@ -8,12 +8,13 @@ import ru.practicum.shareit.enums.Status;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
-@Table(name = "bookings")
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "bookings")
 @EqualsAndHashCode(of = "id")
 public class Booking {
 

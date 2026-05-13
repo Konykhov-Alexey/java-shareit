@@ -164,5 +164,4 @@ public class BookingServiceImpl implements BookingService {
             throw new DeniedException("User " + userId + " is not the owner or Booker of item " + booking.getId());
         }
     }
-
 }
