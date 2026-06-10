@@ -57,7 +57,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional(readOnly = true)
     public ItemWithAdditionalInfoDto getItem(long userId, long itemId) {
-        Item item = getItemOrElseThrow(itemId);
+        Item item = itemRepository.findWithCommentsById(itemId)
+                .orElseThrow(() -> new NotFoundException("Item with id " + itemId + " not found"));
 
         Map<Long, List<Booking>> bookingsByItemId = bookingRepository.findAllByItemId(itemId)
                         .stream()
