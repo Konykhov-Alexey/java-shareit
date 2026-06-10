@@ -23,6 +23,8 @@ import ru.practicum.shareit.user.model.User;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
 
@@ -57,8 +59,11 @@ public class ItemServiceImpl implements ItemService {
     public ItemWithAdditionalInfoDto getItem(long userId, long itemId) {
         Item item = getItemOrElseThrow(itemId);
 
-        List<Booking> bookings = bookingRepository.findAllByItemId(itemId);
-        ItemWithAdditionalInfoDto result = itemWithAdditionalInfoDto(userId, item, bookings);
+        Map<Long, List<Booking>> bookingsByItemId = bookingRepository.findAllByItemId(itemId)
+                        .stream()
+                        .collect(Collectors.groupingBy(b -> b.getItem().getId()));
+        ItemWithAdditionalInfoDto result = itemWithAdditionalInfoDto(userId, item, bookingsByItemId);
+
 
         log.info("get Item: {}", item);
         return result;
@@ -92,9 +97,11 @@ public class ItemServiceImpl implements ItemService {
         }
 
         List<Booking> bookings = bookingRepository.findAllByItemOwnerId(userId);
+        Map<Long, List<Booking>> bookingsByItemId = bookings.stream()
+                .collect(Collectors.groupingBy(b -> b.getItem().getId()));
 
         List<ItemWithAdditionalInfoDto> result = items.stream()
-                .map(item -> itemWithAdditionalInfoDto(userId, item, bookings))
+                .map(item -> itemWithAdditionalInfoDto(userId, item, bookingsByItemId))
                 .toList();
         log.info("getUserItems result: {}", result);
         return result;
@@ -130,15 +137,14 @@ public class ItemServiceImpl implements ItemService {
         return commentMapper.toCommentDto(comment);
     }
 
-    private ItemWithAdditionalInfoDto itemWithAdditionalInfoDto(long userId, Item item, List<Booking> bookings) {
+    private ItemWithAdditionalInfoDto itemWithAdditionalInfoDto(long userId, Item item,
+                                                                Map<Long, List<Booking>> bookingsByItemId) {
         ItemWithAdditionalInfoDto result = itemMapper.toItemWithAdditionalInfoDto(item);
 
         if (item.getOwner().getId() == userId) {
             LocalDateTime now = LocalDateTime.now();
 
-            List<Booking> itemBookings = bookings.stream()
-                    .filter(booking -> booking.getItem().getId().equals(item.getOwner().getId()))
-                    .toList();
+            List<Booking> itemBookings = bookingsByItemId.getOrDefault(item.getId(), emptyList());
 
             Booking lastBooking = itemBookings.stream()
                     .filter(booking -> booking.getEnd().isBefore(now))
