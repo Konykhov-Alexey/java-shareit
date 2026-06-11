@@ -1,10 +1,19 @@
-DROP TABLE IF EXISTS comments, bookings, items, users;
+DROP TABLE IF EXISTS comments, bookings, items, users, requests;
 
 CREATE TABLE IF NOT EXISTS users
 (
     user_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name    VARCHAR(255)        NOT NULL,
     email   VARCHAR(255) UNIQUE NOT NULL
+    );
+
+CREATE TABLE IF NOT EXISTS requests
+(
+    request_id   BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    description  VARCHAR(255) NOT NULL,
+    created      TIMESTAMP    NOT NULL,
+    requestor_id BIGINT       NOT NULL,
+    CONSTRAINT fk_requests_requestor_id FOREIGN KEY (requestor_id) REFERENCES users (user_id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS items
@@ -14,7 +23,9 @@ CREATE TABLE IF NOT EXISTS items
     description  VARCHAR(255) NOT NULL,
     is_available BOOLEAN      NOT NULL,
     owner_id     BIGINT       NOT NULL,
-    CONSTRAINT fk_owner_id FOREIGN KEY (owner_id) REFERENCES users (user_id) ON DELETE CASCADE
+    request_id   BIGINT,
+    CONSTRAINT fk_owner_id FOREIGN KEY (owner_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    CONSTRAINT fk_request_id FOREIGN KEY (request_id) REFERENCES requests (request_id) ON DELETE SET NULL
     );
 
 CREATE TABLE IF NOT EXISTS bookings
