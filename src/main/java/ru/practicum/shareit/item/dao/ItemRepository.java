@@ -30,4 +30,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
                  OR LOWER(i.description) LIKE CONCAT('%', :search, '%'))
             """)
     List<Item> searchItems(@Param("search") String search);
+
+    @EntityGraph(attributePaths = "owner")
+    List<Item> findAllByItemRequestId(long id);
 }
