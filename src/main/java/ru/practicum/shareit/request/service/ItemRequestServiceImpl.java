@@ -1,6 +1,5 @@
 package ru.practicum.shareit.request.service;
 
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -108,8 +107,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
 
     private List<ItemRequestWithItemsDto> mapListToItemRequestWithItemsDto(List<ItemRequest> itemRequests) {
         return itemRequests.stream()
-                .map(itemRequest ->
-                {
+                .map(itemRequest -> {
                     ItemRequestWithItemsDto dto = itemRequestMapper.toItemRequestWithItemsDto(itemRequest);
                     List<ItemDto> itemsDto = mapListToItemDto(itemRequest.getItems());
                     dto.setItems(itemsDto);
@@ -127,5 +125,4 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         return itemRequestRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("ItemRequest with id " + id + " not found"));
     }
-
 }

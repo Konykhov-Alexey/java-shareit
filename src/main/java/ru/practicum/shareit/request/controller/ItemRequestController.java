@@ -1,7 +1,5 @@
 package ru.practicum.shareit.request.controller;
 
-
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +22,9 @@ public class ItemRequestController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ItemRequestDto createItemRequest(@RequestHeader(USER_ID_HEADER) long requestorId,
-                                            @RequestBody @Valid ItemRequestCreateDto itemRequestCreateDto) {
+                                            @RequestBody ItemRequestCreateDto itemRequestCreateDto) {
         return itemRequestService.createItemRequest(requestorId, itemRequestCreateDto);
     }
-
 
     @GetMapping
     public List<ItemRequestWithItemsDto> getUserItemRequests(@RequestHeader(USER_ID_HEADER) long requestorId) {
@@ -43,5 +40,4 @@ public class ItemRequestController {
     public ItemRequestWithItemsDto getItemRequest(@PathVariable long requestId) {
         return itemRequestService.getItemRequest(requestId);
     }
-
 }

@@ -1,6 +1,5 @@
 package ru.practicum.shareit.item.controller;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,7 @@ public class ItemController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ItemDto createItem(@RequestHeader(USER_ID_HEADER) long userId,
-                              @RequestBody @Valid ItemCreateDto itemCreateDto) {
+                              @RequestBody ItemCreateDto itemCreateDto) {
         return itemService.createItem(userId, itemCreateDto);
     }
 
@@ -44,14 +43,14 @@ public class ItemController {
     @PatchMapping("/{itemId}")
     public ItemDto updateItem(@RequestHeader(USER_ID_HEADER) long userId,
                               @PathVariable long itemId,
-                              @RequestBody @Valid ItemUpdateDto itemUpdateDto) {
+                              @RequestBody ItemUpdateDto itemUpdateDto) {
         return itemService.updateItem(userId, itemId, itemUpdateDto);
     }
 
     @PostMapping("/{itemId}/comment")
     public CommentDto addComment(@RequestHeader(USER_ID_HEADER) long userId,
                                  @PathVariable long itemId,
-                                 @RequestBody @Valid CommentCreateDto commentCreateDto) {
+                                 @RequestBody CommentCreateDto commentCreateDto) {
         return itemService.createComment(userId, itemId, commentCreateDto);
     }
 }
