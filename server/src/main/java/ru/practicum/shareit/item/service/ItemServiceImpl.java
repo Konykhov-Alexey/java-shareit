@@ -53,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
         item.setOwner(user);
 
         Long requestId = itemCreateDto.getRequestId();
-        if(requestId != null) {
+        if (requestId != null) {
             ItemRequest itemRequest = getItemRequestOrElseThrow(itemCreateDto.getRequestId());
             item.setItemRequest(itemRequest);
         }
