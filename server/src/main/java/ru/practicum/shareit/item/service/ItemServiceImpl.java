@@ -222,6 +222,6 @@ public class ItemServiceImpl implements ItemService {
 
     private ItemRequest getItemRequestOrElseThrow(long id) {
         return itemRequestRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("ItemRequest with id" + id + " not found"));
+                .orElseThrow(() -> new NotFoundException("ItemRequest with id " + id + " not found"));
     }
 }
