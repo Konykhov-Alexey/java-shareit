@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 public interface ItemRequestRepository extends JpaRepository<ItemRequest, Long> {
 
-    @EntityGraph(attributePaths = "item")
     List<ItemRequest> getAllByRequestorId(long requestorId, Sort sort);
 
     List<ItemRequest> getAllByRequestorIdNot(long requestorId, Sort sort);
